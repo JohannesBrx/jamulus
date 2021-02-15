@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>425</width>
+    <width>543</width>
     <height>490</height>
    </rect>
   </property>
@@ -109,39 +109,155 @@
              </spacer>
             </item>
             <item>
-             <layout class="QHBoxLayout">
+             <layout class="QVBoxLayout" name="verticalLayout_6">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
               <item>
-               <widget class="QLabel" name="lblDelay">
-                <property name="text">
-                 <string>Delay</string>
+               <layout class="QHBoxLayout">
+                <item>
+                 <widget class="QLabel" name="lblDelay">
+                  <property name="text">
+                   <string>Delay</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="CMultiColorLED" name="ledDelay" native="true">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>14</width>
+                    <height>14</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>14</width>
+                    <height>14</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QProgressBar" name="prgDelay">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
                 </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                <property name="value">
+                 <number>0</number>
                 </property>
-                <property name="wordWrap">
+                <property name="textVisible">
                  <bool>false</bool>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="CMultiColorLED" name="ledDelay" native="true">
+               <widget class="QLabel" name="lblShowDelay">
+                <property name="minimumSize">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="sizeConstraint">
+               <enum>QLayout::SetDefaultConstraint</enum>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="lblPing">
+                <property name="text">
+                 <string>Ping</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QProgressBar" name="prgPing">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>14</width>
-                  <height>14</height>
-                 </size>
+                <property name="maximum">
+                 <number>50</number>
                 </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>14</width>
-                  <height>14</height>
-                 </size>
+                <property name="value">
+                 <number>0</number>
+                </property>
+                <property name="textVisible">
+                 <bool>true</bool>
+                </property>
+                <property name="invertedAppearance">
+                 <bool>false</bool>
+                </property>
+                <property name="textDirection">
+                 <enum>QProgressBar::TopToBottom</enum>
+                </property>
+                <property name="format">
+                 <string>%p%</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lblShowPing">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="indent">
+                 <number>-1</number>
                 </property>
                </widget>
               </item>
@@ -168,7 +284,7 @@
                  <string>Buffers</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                 </property>
                 <property name="wordWrap">
                  <bool>false</bool>
@@ -223,6 +339,9 @@
           </item>
           <item>
            <layout class="QVBoxLayout">
+            <property name="spacing">
+             <number>-1</number>
+            </property>
             <item>
              <widget class="QLabel" name="lblInputLEDMeter">
               <property name="text">
@@ -245,7 +364,7 @@
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>19</width>
+                  <width>10</width>
                   <height>88</height>
                  </size>
                 </property>
@@ -261,7 +380,7 @@
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>19</width>
+                  <width>10</width>
                   <height>88</height>
                  </size>
                 </property>
@@ -274,7 +393,7 @@
               <item>
                <widget class="QLabel" name="lblLevelMeterLeft">
                 <property name="text">
-                 <string>L</string>
+                 <string notr="true">L</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
@@ -284,7 +403,7 @@
               <item>
                <widget class="QLabel" name="lblLevelMeterRight">
                 <property name="text">
-                 <string>R</string>
+                 <string notr="true">R</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
