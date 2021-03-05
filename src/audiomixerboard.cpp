@@ -1527,3 +1527,8 @@ void CAudioMixerBoard::SetChannelLevels ( const CVector<uint16_t>& vecChannelLev
         }
     }
 }
+
+void CAudioMixerBoard::MuteMyChannel()
+{
+    SetFaderIsMute ( iMyChannelID, true );
+}

@@ -211,6 +211,7 @@ public:
     void            SetPanIsSupported();
     void            SetRemoteFaderIsMute ( const int iChannelIdx, const bool bIsMute );
     void            SetMyChannelID ( const int iChannelIdx ) { iMyChannelID = iChannelIdx; }
+    int             GetMyChannelID() const { return iMyChannelID; }
 
     void            SetFaderLevel ( const int iChannelIdx,
                                     const int iValue );
@@ -238,6 +239,8 @@ public:
     void            SetAllFaderLevelsToNewClientLevel();
     void            StoreAllFaderSettings();
     void            LoadAllFaderSettings();
+
+    void            MuteMyChannel();
 
 protected:
     class CMixerBoardScrollArea : public QScrollArea
