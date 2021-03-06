@@ -348,6 +348,10 @@ CClientSettingsDlg::CClientSettingsDlg ( CClient*         pNCliP,
     // update new client fader level edit box
     edtNewClientLevel->setText ( QString::number ( pSettings->iNewClientFaderLevel ) );
 
+    // update feedback detection
+    chbDetectFeedback->setCheckState ( pSettings->bEnableFeedbackDetection ?
+        Qt::Checked : Qt::Unchecked );
+
     // update enable small network buffers check box
     chbEnableOPUS64->setCheckState ( pClient->GetEnableOPUS64() ? Qt::Checked : Qt::Unchecked );
 
@@ -388,6 +392,9 @@ CClientSettingsDlg::CClientSettingsDlg ( CClient*         pNCliP,
 
     QObject::connect ( chbEnableOPUS64, &QCheckBox::stateChanged,
         this, &CClientSettingsDlg::OnEnableOPUS64StateChanged );
+
+    QObject::connect ( chbDetectFeedback, &QCheckBox::stateChanged,
+        this, &CClientSettingsDlg::OnFeedbackDetectionChanged );
 
     // line edits
     QObject::connect ( edtNewClientLevel, &QLineEdit::editingFinished,
@@ -590,6 +597,13 @@ void CClientSettingsDlg::UpdateSoundDeviceChannelSelectionFrame()
 #endif
 }
 
+void CClientSettingsDlg::SetEnableFeedbackDetection ( bool enable )
+{
+    pSettings->bEnableFeedbackDetection = enable;
+    chbDetectFeedback->setCheckState ( pSettings->bEnableFeedbackDetection ?
+        Qt::Checked : Qt::Unchecked );
+}
+
 void CClientSettingsDlg::OnDriverSetupClicked()
 {
     pClient->OpenSndCrdDriverSetup();
@@ -669,6 +683,11 @@ void CClientSettingsDlg::OnEnableOPUS64StateChanged ( int value )
 {
     pClient->SetEnableOPUS64 ( value == Qt::Checked );
     UpdateDisplay();
+}
+
+void CClientSettingsDlg::OnFeedbackDetectionChanged ( int value )
+{
+    pSettings->bEnableFeedbackDetection = value == Qt::Checked;
 }
 
 void CClientSettingsDlg::OnCentralServerAddressEditingFinished()
