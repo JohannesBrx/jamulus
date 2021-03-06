@@ -349,6 +349,11 @@ void CClientSettings::ReadSettingsFromXML ( const QDomDocument&   IniXMLDocument
         pClient->SetReverbOnLeftChan ( bValue );
     }
 
+    if ( GetFlagIniSet ( IniXMLDocument, "client", "gatestate", bValue ) )
+    {
+        pClient->SetGateState ( bValue );
+    }
+
     // sound card selection
     const QString strError = pClient->SetSndCrdDev ( FromBase64ToString ( GetIniSetting ( IniXMLDocument, "client", "auddev_base64", "" ) ) );
 
@@ -658,6 +663,10 @@ void CClientSettings::WriteSettingsToXML ( QDomDocument& IniXMLDocument )
     // reverberation channel assignment
     SetFlagIniSet ( IniXMLDocument, "client", "reverblchan",
         pClient->IsReverbOnLeftChan() );
+
+    // gate state
+    SetFlagIniSet ( IniXMLDocument, "client", "gatestate",
+        pClient->GetGateState() );
 
     // sound card selection
     PutIniSetting ( IniXMLDocument, "client", "auddev_base64",

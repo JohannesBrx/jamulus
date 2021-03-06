@@ -184,6 +184,9 @@ public slots:
 
     void OnAudioPanValueChanged ( int value );
 
+    void OnGateStateChanged ( int value )
+        { pClient->SetGateState ( value == Qt::Checked ); }
+
     void OnAudioReverbValueChanged ( int value )
         { pClient->SetReverbLevel ( value ); }
 

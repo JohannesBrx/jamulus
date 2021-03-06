@@ -51,6 +51,7 @@ CClient::CClient ( const quint16  iPortNumber,
     iAudioInFader                    ( AUD_FADER_IN_MIDDLE ),
     bReverbOnLeftChan                ( false ),
     iReverbLevel                     ( 0 ),
+    bGateState                       ( false ),
     iSndCrdPrefFrameSizeFactor       ( FRAME_SIZE_FACTOR_DEFAULT ),
     iSndCrdFrameSizeFactor           ( FRAME_SIZE_FACTOR_DEFAULT ),
     bSndCrdConversionBufferRequired  ( false ),
@@ -978,6 +979,11 @@ void CClient::Init()
                        iStereoBlockSizeSam,
                        SYSTEM_SAMPLE_RATE_HZ );
 
+    // init noise gate
+    NoiseGate.Init ( eAudioChannelConf,
+                     iStereoBlockSizeSam,
+                     SYSTEM_SAMPLE_RATE_HZ );
+
     // init the sound card conversion buffers
     if ( bSndCrdConversionBufferRequired )
     {
@@ -1059,6 +1065,12 @@ void CClient::ProcessAudioDataIntern ( CVector<int16_t>& vecsStereoSndCrd )
                               iMonoBlockSizeSam,
                               true );
 #endif
+
+    // apply noise gate if activated
+    if ( bGateState )
+    {
+        NoiseGate.Process ( vecsStereoSndCrd );
+    }
 
     // add reverberation effect if activated
     if ( iReverbLevel != 0 )
