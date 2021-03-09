@@ -436,15 +436,8 @@ void CNoiseGate::Process ( CVector<int16_t>& vecsStereoInOut )
 
     for ( int i = 0; i < iStereoBlockSizeSam; i += 2 )
     {
-        if ( eAudioChannelConf == CC_STEREO )
-        {
-            inputValue = std::max ( vecsStereoInOut[i],
-                vecsStereoInOut[i + 1] );
-        }
-        else
-        {
-            inputValue = vecsStereoInOut[i];
-        }
+        inputValue = std::max ( vecsStereoInOut[i],
+            vecsStereoInOut[i + 1] );
 
         // compute maximum level and let it slowly decay
         maxLevel = std::max ( 0, std::max ( maxLevel - decay,
@@ -474,12 +467,8 @@ void CNoiseGate::Process ( CVector<int16_t>& vecsStereoInOut )
         // apply noise gate to final signal
         vecsStereoInOut[i] =
             ( ( int ) vecsStereoInOut[i] * gain ) >> NG_SHIFT_FP;
-
-        if ( eAudioChannelConf == CC_STEREO )
-        {
-            vecsStereoInOut[i + 1] =
-                ( ( int ) vecsStereoInOut[i + 1] * gain ) >> NG_SHIFT_FP;
-        }
+        vecsStereoInOut[i + 1] =
+            ( ( int ) vecsStereoInOut[i + 1] * gain ) >> NG_SHIFT_FP;
     }
 }
 
