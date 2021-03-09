@@ -52,6 +52,7 @@ CClient::CClient ( const quint16  iPortNumber,
     bReverbOnLeftChan                ( false ),
     iReverbLevel                     ( 0 ),
     bGateState                       ( false ),
+    iGateThreshLevel                 ( 0 ),
     iSndCrdPrefFrameSizeFactor       ( FRAME_SIZE_FACTOR_DEFAULT ),
     iSndCrdFrameSizeFactor           ( FRAME_SIZE_FACTOR_DEFAULT ),
     bSndCrdConversionBufferRequired  ( false ),
@@ -1069,7 +1070,11 @@ void CClient::ProcessAudioDataIntern ( CVector<int16_t>& vecsStereoSndCrd )
     // apply noise gate if activated
     if ( bGateState )
     {
-        NoiseGate.Process ( vecsStereoSndCrd );
+        NoiseGate.Process ( vecsStereoSndCrd,
+                            ( static_cast<float> ( iGateThreshLevel ) / 100.0f -
+                            1.0f ) *
+                            ( UPPER_BOUND_NOISE_GATE - LOW_BOUND_NOISE_GATE ) +
+                            UPPER_BOUND_NOISE_GATE );
     }
 
     // add reverberation effect if activated

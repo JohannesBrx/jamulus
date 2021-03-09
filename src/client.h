@@ -145,6 +145,9 @@ public:
     bool GetGateState() const { return bGateState; }
     void SetGateState ( const bool state ) { bGateState = state; }
 
+    int  GetGateThreshLevel() const { return iGateThreshLevel; }
+    void SetGateThreshLevel ( const int level ) { iGateThreshLevel = level; }
+
     int  GetReverbLevel() const { return iReverbLevel; }
     void SetReverbLevel ( const int iNL ) { iReverbLevel = iNL; }
 
@@ -334,6 +337,7 @@ protected:
     bool                    bReverbOnLeftChan;
     int                     iReverbLevel;
     bool                    bGateState;
+    int                     iGateThreshLevel;
     CAudioReverb            AudioReverb;
     CNoiseGate              NoiseGate;
 

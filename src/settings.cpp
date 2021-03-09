@@ -349,9 +349,17 @@ void CClientSettings::ReadSettingsFromXML ( const QDomDocument&   IniXMLDocument
         pClient->SetReverbOnLeftChan ( bValue );
     }
 
+    // gate state
     if ( GetFlagIniSet ( IniXMLDocument, "client", "gatestate", bValue ) )
     {
         pClient->SetGateState ( bValue );
+    }
+
+    // gate level
+    if ( GetNumericIniSet ( IniXMLDocument, "client", "gatethreshlevel",
+         0, 100, iValue ) )
+    {
+        pClient->SetGateThreshLevel ( iValue );
     }
 
     // sound card selection
@@ -667,6 +675,10 @@ void CClientSettings::WriteSettingsToXML ( QDomDocument& IniXMLDocument )
     // gate state
     SetFlagIniSet ( IniXMLDocument, "client", "gatestate",
         pClient->GetGateState() );
+
+    // gate threshold level
+    SetNumericIniSet ( IniXMLDocument, "client", "gatethreshlevel",
+        pClient->GetGateThreshLevel() );
 
     // sound card selection
     PutIniSetting ( IniXMLDocument, "client", "auddev_base64",

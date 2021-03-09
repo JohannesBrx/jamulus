@@ -179,6 +179,10 @@ LED bar:      lbr
 #define RED_BOUND_LED_BAR                7
 #define YELLOW_BOUND_LED_BAR             5
 
+// bounds or the gate
+#define LOW_BOUND_NOISE_GATE             ( -60.0 ) // dB
+#define UPPER_BOUND_NOISE_GATE           ( -30.0 ) // dB
+
 // maximum number of connected clients at the server (must not be larger than 256)
 #define MAX_NUM_CHANNELS                 150 // max number channels for server
 

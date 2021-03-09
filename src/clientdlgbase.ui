@@ -454,10 +454,26 @@
          </layout>
         </item>
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <layout class="QVBoxLayout">
           <property name="topMargin">
            <number>0</number>
           </property>
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QSlider" name="sldGateThresh">
+            <property name="pageStep">
+             <number>1</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksBothSides</enum>
+            </property>
+            <property name="tickInterval">
+             <number>20</number>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QCheckBox" name="chbGate">
             <property name="text">

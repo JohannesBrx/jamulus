@@ -430,9 +430,13 @@ void CNoiseGate::Clear()
     maxLevel = 0;
 }
 
-void CNoiseGate::Process ( CVector<int16_t>& vecsStereoInOut )
+void CNoiseGate::Process ( CVector<int16_t>& vecsStereoInOut,
+                           const float       gateThreshLeveldB)
 {
     int16_t inputValue;
+
+    threshOpen = _MAXSHORT * pow (10.0f, gateThreshLeveldB / 20.0f);
+    threshClose = _MAXSHORT * pow (10.0f, (gateThreshLeveldB - 10.0f) / 20.0f);
 
     for ( int i = 0; i < iStereoBlockSizeSam; i += 2 )
     {
@@ -470,6 +474,8 @@ void CNoiseGate::Process ( CVector<int16_t>& vecsStereoInOut )
         vecsStereoInOut[i + 1] =
             ( ( int ) vecsStereoInOut[i + 1] * gain ) >> NG_SHIFT_FP;
     }
+
+    // printf ( "%d\t%d\t%.2f\n", gain, gateOpen, gateThreshLeveldB );
 }
 
 

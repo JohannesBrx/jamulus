@@ -1208,7 +1208,8 @@ public:
                 const int          iSampleRate );
 
     void Clear();
-    void Process ( CVector<int16_t>& vecsStereoInOut );
+    void Process ( CVector<int16_t>& vecsStereoInOut,
+                   const float       gateThreshLeveldB);
 
 protected:
     EAudChanConf eAudioChannelConf;

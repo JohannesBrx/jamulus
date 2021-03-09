@@ -215,6 +215,7 @@ CClientDlg::CClientDlg ( CClient*         pNCliP,
     // init gate
     chbGate->setCheckState ( pClient->GetGateState() ? Qt::Checked :
         Qt::Unchecked );
+    sldGateThresh->setValue ( pClient->GetGateThreshLevel() );
 
     // init reverb channel
     UpdateRevSelection();
@@ -444,6 +445,9 @@ CClientDlg::CClientDlg ( CClient*         pNCliP,
 
     QObject::connect ( chbGate, &QCheckBox::stateChanged,
         this, &CClientDlg::OnGateStateChanged );
+
+    QObject::connect ( sldGateThresh, &QSlider::valueChanged,
+        this, &CClientDlg::OnGateThreshChanged );
 
     // radio buttons
     QObject::connect ( rbtReverbSelL, &QRadioButton::clicked,
