@@ -239,6 +239,7 @@ public:
     void            SetAllFaderLevelsToNewClientLevel();
     void            StoreAllFaderSettings();
     void            LoadAllFaderSettings();
+    void            AutoAdjustAllFaderLevels();
 
     void            MuteMyChannel();
 
@@ -285,6 +286,7 @@ protected:
     ERecorderState          eRecorderState;
     QMutex                  Mutex;
     EChSortType             eChSortType;
+    CVector<float>          vecAvgLevels;
 
     virtual void UpdateGainValue ( const int    iChannelIdx,
                                    const float  fValue,
