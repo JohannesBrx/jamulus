@@ -354,6 +354,19 @@ void CClientSettings::ReadSettingsFromXML ( const QDomDocument&   IniXMLDocument
         pClient->SetReverbOnLeftChan ( bValue );
     }
 
+    // gate state
+    if ( GetFlagIniSet ( IniXMLDocument, "client", "gatestate", bValue ) )
+    {
+        pClient->SetGateState ( bValue );
+    }
+
+    // gate level
+    if ( GetNumericIniSet ( IniXMLDocument, "client", "gatethreshlevel",
+         0, 100, iValue ) )
+    {
+        pClient->SetGateThreshLevel ( iValue );
+    }
+
     // sound card selection
     const QString strError = pClient->SetSndCrdDev ( FromBase64ToString ( GetIniSetting ( IniXMLDocument, "client", "auddev_base64", "" ) ) );
 
@@ -667,6 +680,14 @@ void CClientSettings::WriteSettingsToXML ( QDomDocument& IniXMLDocument )
     // reverberation channel assignment
     SetFlagIniSet ( IniXMLDocument, "client", "reverblchan",
         pClient->IsReverbOnLeftChan() );
+
+    // gate state
+    SetFlagIniSet ( IniXMLDocument, "client", "gatestate",
+        pClient->GetGateState() );
+
+    // gate threshold level
+    SetNumericIniSet ( IniXMLDocument, "client", "gatethreshlevel",
+        pClient->GetGateThreshLevel() );
 
     // sound card selection
     PutIniSetting ( IniXMLDocument, "client", "auddev_base64",

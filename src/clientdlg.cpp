@@ -212,6 +212,11 @@ CClientDlg::CClientDlg ( CClient*         pNCliP,
     sldAudioReverb->setValue ( iCurAudReverb );
     sldAudioReverb->setTickInterval ( AUD_REVERB_MAX / 5 );
 
+    // init gate
+    chbGate->setCheckState ( pClient->GetGateState() ? Qt::Checked :
+        Qt::Unchecked );
+    sldGateThresh->setValue ( pClient->GetGateThreshLevel() );
+
     // init reverb channel
     UpdateRevSelection();
 
@@ -443,6 +448,12 @@ CClientDlg::CClientDlg ( CClient*         pNCliP,
 
     QObject::connect ( sldAudioReverb, &QSlider::valueChanged,
         this, &CClientDlg::OnAudioReverbValueChanged );
+
+    QObject::connect ( chbGate, &QCheckBox::stateChanged,
+        this, &CClientDlg::OnGateStateChanged );
+
+    QObject::connect ( sldGateThresh, &QSlider::valueChanged,
+        this, &CClientDlg::OnGateThreshChanged );
 
     // radio buttons
     QObject::connect ( rbtReverbSelL, &QRadioButton::clicked,

@@ -394,6 +394,92 @@ void CAudioReverb::Process ( CVector<int16_t>& vecsStereoInOut,
 
 
 /******************************************************************************\
+* Noise Gate                                                                   *
+\******************************************************************************/
+#define NG_GAIN_MAX     65536
+#define NG_SHIFT_FP     16
+
+void CNoiseGate::Init ( const EAudChanConf eNAudioChannelConf,
+                        const int          iNStereoBlockSizeSam,
+                        const int          iSampleRate )
+{
+    // store parameters
+    eAudioChannelConf   = eNAudioChannelConf;
+    iStereoBlockSizeSam = iNStereoBlockSizeSam;
+
+    float threshOpendB = -40.0f;
+    float threshClosedB = -50.0f;
+
+    threshOpen = _MAXSHORT * pow (10.0f, threshOpendB / 20.0f);
+    threshClose = _MAXSHORT * pow (10.0f, threshClosedB / 20.0f);
+
+    float tAttack = 0.02f;
+    attack = NG_GAIN_MAX / (tAttack * iSampleRate);
+    hold = 4 * attack;
+    release = 4 * attack;
+    decay = 10;
+
+    Clear();
+}
+
+void CNoiseGate::Clear()
+{
+    gateOpen = false;
+    gain = NG_GAIN_MAX;
+    held = 0;
+    maxLevel = 0;
+}
+
+void CNoiseGate::Process ( CVector<int16_t>& vecsStereoInOut,
+                           const float       gateThreshLeveldB)
+{
+    int16_t inputValue;
+
+    threshOpen = _MAXSHORT * pow (10.0f, gateThreshLeveldB / 20.0f);
+    threshClose = _MAXSHORT * pow (10.0f, (gateThreshLeveldB - 10.0f) / 20.0f);
+
+    for ( int i = 0; i < iStereoBlockSizeSam; i += 2 )
+    {
+        inputValue = std::max ( vecsStereoInOut[i],
+            vecsStereoInOut[i + 1] );
+
+        // compute maximum level and let it slowly decay
+        maxLevel = std::max ( 0, std::max ( maxLevel - decay,
+            (int) inputValue ) );
+
+        if ( maxLevel > threshOpen || gateOpen )
+        {
+            gateOpen = true;
+            gain = std::min ( NG_GAIN_MAX, gain + attack );
+        }
+
+        if ( maxLevel < threshClose || !gateOpen)
+        {
+            if ( gateOpen )
+            {
+                held = 0;
+            }
+
+            held += 1;
+            gateOpen = false;
+            if ( held > hold )
+            {
+                gain = std::max ( 0, gain - release );
+            }
+        }
+
+        // apply noise gate to final signal
+        vecsStereoInOut[i] =
+            ( ( int ) vecsStereoInOut[i] * gain ) >> NG_SHIFT_FP;
+        vecsStereoInOut[i + 1] =
+            ( ( int ) vecsStereoInOut[i + 1] * gain ) >> NG_SHIFT_FP;
+    }
+
+    // printf ( "%d\t%d\t%.2f\n", gain, gateOpen, gateThreshLeveldB );
+}
+
+
+/******************************************************************************\
 * GUI Utilities                                                                *
 \******************************************************************************/
 // About dialog ----------------------------------------------------------------

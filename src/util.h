@@ -1197,6 +1197,40 @@ protected:
 };
 
 
+// Noise Gate ------------------------------------------------------------------
+class CNoiseGate
+{
+public:
+    CNoiseGate() {}
+
+    void Init ( const EAudChanConf eNAudioChannelConf,
+                const int          iNStereoBlockSizeSam,
+                const int          iSampleRate );
+
+    void Clear();
+    void Process ( CVector<int16_t>& vecsStereoInOut,
+                   const float       gateThreshLeveldB);
+
+protected:
+    EAudChanConf eAudioChannelConf;
+    int          iStereoBlockSizeSam;
+
+    // configuration
+    int          threshOpen;
+    int          threshClose;
+    int          attack;
+    int          hold;
+    int          release;
+    int          decay;
+
+    // variables
+    bool         gateOpen;
+    int          held;
+    int          maxLevel;
+    int          gain;
+};
+
+
 // CRC -------------------------------------------------------------------------
 class CCRC
 {
