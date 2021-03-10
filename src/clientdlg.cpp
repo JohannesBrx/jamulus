@@ -1203,6 +1203,13 @@ void CClientDlg::OnPingTimeResult ( int iPingTime )
                                               eOverallDelayLEDColor );
     }
 
+    // add overall delay and ping time on main window
+    lblShowDelay->setText ( QString().setNum ( iOverallDelayMs ) + " ms" );
+    lblShowPing->setText ( QString().setNum ( iPingTime ) + " ms" );
+
+    prgDelay->setValue ( iOverallDelayMs );
+    prgPing->setValue ( iPingTime );
+
     // update delay LED on the main window
     ledDelay->SetLight ( eOverallDelayLEDColor );
 }
@@ -1358,6 +1365,11 @@ OnTimerStatus();
     ledBuffers->Reset();
     ledDelay->Reset();
     ClientSettingsDlg.ResetStatusAndPingLED();
+
+    prgPing->setValue ( 0 );
+    prgDelay->setValue ( 0 );
+    lblShowPing->setText ( "" );
+    lblShowDelay->setText ( "" );
 
     // clear mixer board (remove all faders)
     MainMixerBoard->HideAll();
